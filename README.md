@@ -9,7 +9,7 @@ cd proxmox-create-template/
 chmod +x provision.sh
 ```
 # Usage
-You need to specify the image type os ex. "ubuntu" "debian" or "centos"
+You need to specify the image type os ex. "ubuntu" "debian" or "centos". If you don't the script will default to ubuntu image.
 ```
 sh provision.sh ubuntu
 ```
