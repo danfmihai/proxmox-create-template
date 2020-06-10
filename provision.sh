@@ -36,6 +36,10 @@ vm_no=200
   }
     
     set_vm_no
+    
+    # cleaning up
+    rm -rf $vms
+    rm -rf $list_vm
 
     if [ $# -gt 0 ]; then
         img_type="$1"
