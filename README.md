@@ -1,6 +1,9 @@
 
-Creates a proxmox template using the cloud-init images from Ubuntu,Debian and Centos
-Images are pulled from Ubuntu,Debian and Centos mirrors
+# Provisions proxmox template and a new vm from template
+Creates a proxmox template using the cloud-init images from Ubuntu,Debian and Centos.  Images are pulled from Ubuntu,Debian and Centos mirrors.  
+Script will assign by default ubuntu image if no argument is not specified at the time the script is ran.  
+Will pull the specified image type and create a template and from there a new vm machine.  
+The template will have a random ID in the 9000s and the new VM will have the next available ID.  
 
 # Installation
 ```
