@@ -12,6 +12,10 @@ chmod +x provision.sh
 You need to specify the image type os ex. "ubuntu" "debian" or "centos". If you don't the script will default to ubuntu image.
 ```
 sh provision.sh ubuntu
+or
+sh provision.sh centos
+or
+sh provision.sh debian
 ```
 # After provisioning
 You can log in to the newly created VMs without password with the default usernames from the default images.
