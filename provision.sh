@@ -1,4 +1,33 @@
 #!/bin/bash
+clear
+
+description () {
+    clear
+    cat <<EOF
+        Proxmox Server Provisioning
+        VM Template ID: ${img_id}
+        New VM ID: ${vm_no}
+        -----------------------------------------------------------------
+        This script is supposed to create a proxmox template using the cloud-init
+        images from Ubuntu,Debian and Centos.  Images are pulled from Ubuntu, Debian
+        and Centos mirrors.
+        Script will assign by default ubuntu image if no argument is not specified at 
+        the time the script is ran.  
+        Will pull the specified image type and create a template and from the template 
+        will create a new vm machine.  
+        The template will have a random ID in the 9000s and the new VM will have the 
+        next available ID.
+        # Usage 
+        You need to specify the image type os ex. "ubuntu" "debian" or "centos". 
+        If you don't the script will default to ubuntu image. Ex.:
+        sh provision.sh ubuntu # or
+        sh provision.sh centos # or
+        sh provision.sh debian
+        -----------------------------------------------------------------
+        For more info: https://github.com/danfmihai/proxmox-create-template 
+
+EOF
+}
 
 # set -x 
 #default image type
@@ -36,7 +65,7 @@ vm_no=200
   }
     
     set_vm_no
-    
+    description
     # cleaning up
     rm -rf $vms
     rm -rf $list_vm
@@ -70,11 +99,11 @@ vm_no=200
         ;;
 
     "debian" )
-        img_filename=debian-9-nocloud-amd64-daily-20200210-166.qcow2
+        img_filename=debian-10-generic-arm64-daily-20200610-292.qcow2
         if ls $img_filename* >/dev/null 2>&1; then
             echo "File(s) exits with ${img_type} image."
         else
-            wget https://cloud.debian.org/images/cloud/stretch/daily/20200210-166/$img_filename
+            wget https://cloud.debian.org/images/cloud/buster/daily/20200610-292/$img_filename
         fi
         ;;
 
@@ -110,8 +139,13 @@ vm_no=200
     # Create a virtual machine out of the template
     qm clone $img_id $vm_no --name my-${img_type}-${img_id}-vm
     # Now you can change the Cloud-init settings either in the admin ui or with the qm command:
+    #if [ $img_type == "debian" ]
+    #then
+    #    qm set $vm_no --ciuser debian
+    #fi
     qm set $vm_no --sshkey ~/.ssh/id_rsa.pub 
     qm set $vm_no --ipconfig0 ip=$ip_vm/24,gw=$gw_vm
+
     # start the vm  
     qm start $vm_no
     # With this command you have set a public key for SSH authentication and the static IP 192.168.2.100. 

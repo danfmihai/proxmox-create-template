@@ -24,6 +24,6 @@ sh provision.sh debian
 You can log in to the newly created VMs without password with the default usernames from the default images.
  - For ubuntu image username is: ubuntu
  - For centos image username is: centos
- - For debian image username is: admin ()
+ - For debian image username is: debian
 
  Reference link: [Deploy Proxmox virtual machines using Cloud-init](https://norocketscience.at/deploy-proxmox-virtual-machines-using-cloud-init/)
