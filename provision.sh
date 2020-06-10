@@ -108,7 +108,8 @@ vm_no=200
     # Now you can change the Cloud-init settings either in the admin ui or with the qm command:
     qm set $vm_no --sshkey ~/.ssh/id_rsa.pub 
     qm set $vm_no --ipconfig0 ip=$ip_vm/24,gw=$gw_vm
-
+    # start the vm  
+    qm start $vm_no
     # With this command you have set a public key for SSH authentication and the static IP 192.168.2.100. 
     # We didn't set a user which means Ubuntu is using the default one (ubuntu). That's it! 
     # Your Cloud-Init image should now boot up fine with the desired settings.
