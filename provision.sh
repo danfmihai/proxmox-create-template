@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -x 
+# set -x 
 #default image type
 img_type=
 img_filename=bionic-server-cloudimg-amd64.img
@@ -11,6 +11,7 @@ gw_vm=192.168.102.1
 vm_no=200
   
   get_vm_number () {
+    declare -a used_vms
     local used_vms=()
     local count=0
     local list_vm=./list.txt
@@ -130,4 +131,4 @@ vm_no=200
     echo "ip: ${ip_vm}"
     echo "Uses default username: ${img_type}"
     
-    set +x
+    # set +x
