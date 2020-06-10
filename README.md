@@ -13,3 +13,8 @@ You need to specify the image type os ex. "ubuntu" "debian" or "centos". If you 
 ```
 sh provision.sh ubuntu
 ```
+# After provisioning
+You can log in to the newly created without password with the default usernames from the default images.
+For ubuntu image username is: ubuntu
+For centos image username is: centos
+For debian image username is: admin
