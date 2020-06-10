@@ -12,7 +12,7 @@ vm_no=200
   
   get_vm_number () {
     declare -a used_vms
-    local used_vms=()
+    #local used_vms=()
     local count=0
     local list_vm=./list.txt
     qm list > $list_vm
@@ -46,7 +46,7 @@ vm_no=200
     # cleaning up
     rm -rf $list_vm
     
-    retun $vm_no
+    return $vm_no
   }
 
 
