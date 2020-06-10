@@ -1,43 +1,42 @@
 #!/bin/bash
-set -x
+#set -x
 
-get_vm_number () {
-    local used_vms=()
-    local count
-    local list_vm=./list.txt
-    qm list > $list_vm
-    pct list >> $list_vm
-    used_vms=($(awk {'print $1'} $list_vm | sed '/VMID/d' | sort)) 
-    echo "${used_vms[*]}"
+set_vm_no () {
+    list_vm=./vms.txt
+    vms=./vms.txt
+    #qm list > $list_vm
+    #pct list >> $list_vm
+    #awk {'print $1'} $list_vm | sed '/VMID/d' | sort -r > $vms
     
-    #mapfile -t used_vms
-    # get the total numbers of Vms
-    count=${#used_vms[@]}
-    count=$(($count - 1 ))
-    # delete the one that has 4 characters
-    del=0
-    while [ $del -le $count ]; do
-        chrlen=${#used_vms[$del]}
-        echo "$chrlen"
-        if [ $chrlen -ge 4 ] ;then
-            unset used_vms[$del]
-            #used_vms=("$used_vms[@]/$del")
-            used_vms=( "${used_vms[@]}" )
-        fi 
-        echo "${used_vms[$del]}"
-        del=$(( $del + 1 ))
-    done      
-    
-    count=${#used_vms[@]}
-    #assign a new vm id to vm_no (3 chars)
-    echo "${used_vms[count-1]}"
-    vm_no=$((used_vms[count-1] +1))
-    echo "$vm_no"
-    retun $vm_no
+    input="./list.txt"
+    i=1
+    while IFS= read -r line
+    do
+        
+        #prev_vm=( "$line" "${prev_vm[@]}" )
+        len_line=${#line}
+        echo "Line $i with vm no $line"
+        if [ $len_line -ge 4 ]  
+        then
+        i=$(( $i + 1 ))
+        else    
+          vm_no=$(( $line + 1 ))
+          echo "$vm_no"
+          return $vm_no
+          break
+        fi
+        echo "$len_line char from $line"
+        
+    done < "$input"
+
+ return $vm_no
 }
+set_vm_no
 
-get_vm_number
+echo "New VM is $vm_no"
+
+
 
 echo "$vm_no"
 
-set +x
+#set +x

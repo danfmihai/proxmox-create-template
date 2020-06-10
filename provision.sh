@@ -10,47 +10,32 @@ ip_vm=192.168.102.$i_vm
 gw_vm=192.168.102.1
 vm_no=200
   
-  get_vm_number () {
-    declare -a used_vms
-    #local used_vms=()
-    local count=0
-    local list_vm=./list.txt
+  set_vm_no () {
+    list_vm=./list.txt
+    vms=./vms.txt
     qm list > $list_vm
     pct list >> $list_vm
-    used_vms=($(awk {'print $1'} $list_vm | sed '/VMID/d' | sort)) 
-    echo "${used_vms[*]}"
-        
-    # get the total numbers of Vms
-    count=${#used_vms[@]}
-    count=$(( $count - 1 ))
-    # delete the one that has 4 characters
-    del=0
-    while [ $del -le $count ]; do
-
-        chrlen=${#used_vms[$del]}
-        
-        if [ $chrlen -ge 4 ] ; then
-            unset used_vms[$del]
-            used_vms=( "${used_vms[@]}" )
-        fi 
-        
-        del=$(( $del + 1 ))
-    done      
+    awk {'print $1'} $list_vm | sed '/VMID/d' | sort -r > $vms
     
-    count=${#used_vms[@]}
-    #assign a new vm id to vm_no (3 chars)
-    echo "${used_vms[count-1]}"
-    vm_no=$(( used_vms[count-1] +1))
-    echo "$vm_no"
-    
-    # cleaning up
-    rm -rf $list_vm
-    
-    return $vm_no
+    i=1
+    while IFS= read -r line
+    do
+        len_line=${#line}
+        if [ $len_line -ge 4 ]  
+        then
+            i=$(( $i + 1 ))
+        else    
+          vm_no=$(( $line + 1 ))
+          echo "$vm_no"
+          return $vm_no
+          break
+        fi
+        echo "$len_line char from $line"
+        
+    done < "$vms"
   }
-
-
-    get_vm_number
+    
+    set_vm_no
 
     if [ $# -gt 0 ]; then
         img_type="$1"
