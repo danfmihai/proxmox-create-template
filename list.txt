@@ -1,0 +1,13 @@
+      VMID NAME                 STATUS     MEM(MB)    BOOTDISK(GB) PID       
+       100 pbx-ubuntu           stopped    1572              32.00 0         
+       101 win10                stopped    4096              82.00 0         
+       103 proxmox-test         stopped    4096              32.00 0         
+       104 station1-centos7     stopped    1024               8.00 0         
+       107 server1-centos7      stopped    1024               8.00 0         
+       108 net7-gui             stopped    1024              10.00 0         
+VMID       Status     Lock         Name                
+102        running                 plex                
+105        stopped                 cloud               
+106        stopped                 TimeMachine         
+111        stopped                 nextcloud-hub       
+112        running                 nextcloudhub        

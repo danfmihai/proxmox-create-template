@@ -112,8 +112,10 @@ vm_no=200
     # With this command you have set a public key for SSH authentication and the static IP 192.168.2.100. 
     # We didn't set a user which means Ubuntu is using the default one (ubuntu). That's it! 
     # Your Cloud-Init image should now boot up fine with the desired settings.
+    echo "*********************************"
     echo "The new VM ${vm_no} created with:"
     echo "ip: ${ip_vm}"
     echo "Uses default username: ${img_type}"
+    echo "*********************************"
     
     # set +x
