@@ -1,7 +1,7 @@
 #!/bin/bash
 clear
 
-set -x 
+# set -x 
 
 description () {
     clear
@@ -41,7 +41,7 @@ ip_vm=192.168.102.$i_vm
 gw_vm=192.168.102.1
 vm_no=200
   
-  set_vm_no () {
+   set_vm_no () {
     list_vm=./list.txt
     vms=./vms.txt
     qm list > $list_vm
@@ -80,10 +80,10 @@ vm_no=200
             "debian") ;;
             *) img_type="ubuntu" ;;
         esac
-        echo "Your image selected is ${img_type}"
+        echo "Your have not provided the correct name of image. Default image selected is ${img_type}"
     else
         echo "You have not given an image type os name. (ubuntu,debian or centos)"
-        img_type=ubuntu
+        img_type="ubuntu"
         echo "The default image '${img_type}' will be used."
         
     fi
@@ -146,23 +146,23 @@ vm_no=200
     qm template $img_id
     # Create a virtual machine out of the template
     qm clone $img_id $vm_no --name my-${img_type}-${img_id}-vm
-    # Now you can change the Cloud-init settings either in the admin ui or with the qm command:
-    #if [ $img_type == "debian" ]
-    #then
-    #    qm set $vm_no --ciuser debian
-    #fi
+    # Now you can change the Cloud-init # settings either in the admin ui or with the qm command:
     qm set $vm_no --sshkey ~/.ssh/id_rsa.pub 
     qm set $vm_no --ipconfig0 ip=$ip_vm/24,gw=$gw_vm
 
-    # start the vm  
+    # Optionally you can start the vm  
     qm start $vm_no
-    # With this command you have set a public key for SSH authentication and the static IP 192.168.2.100. 
-    # We didn't set a user which means Ubuntu is using the default one (ubuntu). That's it! 
-    # Your Cloud-Init image should now boot up fine with the desired settings.
+    # With this command you have # set a public key for SSH authentication and the static IP 192.168.2.100. 
+    # We didn't # set a user which means Ubuntu is using the default one (ubuntu). That's it! 
+    # Your Cloud-Init image should now boot up fine with the desired # settings.
     echo "*********************************"
     echo "The new VM ${vm_no} created with:"
     echo "ip: ${ip_vm}"
     echo "Uses default username: ${img_type}"
     echo "*********************************"
-    
-    set +x
+    echo "Please wait for the vm to start..."
+    sleep 20
+    qm status ${vm_no}
+    echo "Try to login 'ssh ${img_type}@${ip_vm}'"
+    echo
+    # set +x
