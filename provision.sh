@@ -83,7 +83,8 @@ vm_no=200
                echo "Your have not provided the correct name of image. Default image selected is ${img_type}" 
             ;;
         esac
-        
+        echo "SELECTED IMAGE: ${img_type}"
+        echo
     else
         echo "You have not given an image type os name. (ubuntu,debian or centos)"
         img_type="ubuntu"
@@ -109,11 +110,11 @@ vm_no=200
         ;;
 
     "debian" )
-        img_filename=debian-10-generic-arm64-daily-20200610-292.qcow2
+        img_filename=debian-11-generic-amd64-daily-20200611-294.qcow2
         if ls $img_filename* >/dev/null 2>&1; then
             echo "File(s) exits with ${img_type} image."
         else
-            wget https://cloud.debian.org/images/cloud/buster/daily/20200610-292/$img_filename
+            wget https://cloud.debian.org/images/cloud/bullseye/daily/20200611-294/$img_filename
         fi
         ;;
 
