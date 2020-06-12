@@ -61,10 +61,9 @@ vm_no=200
           return $vm_no
           break
         fi
-        echo "$len_line char from $line"
-        
+      
     done < "$vms"
-  }
+   }
     
     set_vm_no
     description
@@ -73,14 +72,18 @@ vm_no=200
     rm -rf $list_vm
 
     if [ $# -gt 0 ]; then
+
         img_type="$1"
+
         case $img_type in
             "ubuntu") ;;
             "centos") ;;
             "debian") ;;
-            *) img_type="ubuntu" ;;
+            *) img_type="ubuntu" 
+               echo "Your have not provided the correct name of image. Default image selected is ${img_type}" 
+            ;;
         esac
-        echo "Your have not provided the correct name of image. Default image selected is ${img_type}"
+        
     else
         echo "You have not given an image type os name. (ubuntu,debian or centos)"
         img_type="ubuntu"
