@@ -36,4 +36,6 @@ To get root access use
 sudo -i
 ```
 
- Reference link: [Deploy Proxmox virtual machines using Cloud-init](https://norocketscience.at/deploy-proxmox-virtual-machines-using-cloud-init/)  [Proxmox - qm - doc](https://pve.proxmox.com/pve-docs/qm.1.html)
+ Reference link: [Deploy Proxmox virtual machines using Cloud-init](https://norocketscience.at/deploy-proxmox-virtual-machines-using-cloud-init/)  
+ [Proxmox - qm - doc](https://pve.proxmox.com/pve-docs/qm.1.html)  
+[Proxmox Cloud-Init Support](https://pve.proxmox.com/wiki/Cloud-Init_Support)
