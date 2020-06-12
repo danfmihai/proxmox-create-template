@@ -29,7 +29,7 @@ You can log in to the newly created VMs without password with the default userna
  
 ex.
  ```
-ssh ubuntu@192.168.1.10
+ssh ubuntu@192.168.1.10 (your vm ip)
  ```
 To get root access use 
 ```
