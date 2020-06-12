@@ -1,6 +1,8 @@
 #!/bin/bash
 clear
 
+set -x 
+
 description () {
     clear
     cat <<EOF
@@ -29,7 +31,7 @@ description () {
 EOF
 }
 
-# set -x 
+
 #default image type
 img_type=
 img_filename=bionic-server-cloudimg-amd64.img
@@ -72,8 +74,13 @@ vm_no=200
 
     if [ $# -gt 0 ]; then
         img_type="$1"
+        case $img_type in
+            "ubuntu") ;;
+            "centos") ;;
+            "debian") ;;
+            *) img_type="ubuntu" ;;
+        esac
         echo "Your image selected is ${img_type}"
-    
     else
         echo "You have not given an image type os name. (ubuntu,debian or centos)"
         img_type=ubuntu
@@ -118,7 +125,7 @@ vm_no=200
 
      *)
          echo "Wrong name given. Please select an image name like: ubuntu centos or debian as argument"
-            ;;
+         exit ;;
     esac 
 
    # Define your virtual machine which you're like to use as a template
@@ -133,7 +140,8 @@ vm_no=200
     qm set $img_id --boot c --bootdisk scsi0
     # Attach a serial console to the virtual machine 
     # (this is needed for some Cloud-Init distributions, such as Ubuntu)
-    qm set $img_id --serial0 socket --vga serial0
+    qm set $img_id --serial0 socket 
+    #--vga serial0
     # Finally create a template
     qm template $img_id
     # Create a virtual machine out of the template
@@ -157,4 +165,4 @@ vm_no=200
     echo "Uses default username: ${img_type}"
     echo "*********************************"
     
-    # set +x
+    set +x
