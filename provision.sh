@@ -110,11 +110,11 @@ vm_no=200
         ;;
 
     "debian" )
-        img_filename=debian-10-generic-amd64-daily-20200613-296.qcow2
+        img_filename=debian-11-genericcloud-amd64-daily-20200613-296.qcow2
         if ls $img_filename* >/dev/null 2>&1; then
             echo "File(s) exits with ${img_type} image."
         else
-            wget https://cloud.debian.org/images/cloud/buster/daily/20200613-296/$img_filename
+            wget https://cloud.debian.org/images/cloud/bullseye/daily/20200613-296/$img_filename
         fi
         ;;
 
