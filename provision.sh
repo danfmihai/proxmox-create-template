@@ -110,11 +110,11 @@ vm_no=200
         ;;
 
     "debian" )
-        img_filename=debian-11-generic-amd64-daily-20200611-294.qcow2
+        img_filename=debian-10-generic-amd64-daily-20200613-296.qcow2
         if ls $img_filename* >/dev/null 2>&1; then
             echo "File(s) exits with ${img_type} image."
         else
-            wget https://cloud.debian.org/images/cloud/bullseye/daily/20200611-294/$img_filename
+            wget https://cloud.debian.org/images/cloud/buster/daily/20200613-296/$img_filename
         fi
         ;;
 
@@ -148,25 +148,26 @@ vm_no=200
     #--vga serial0
     # Finally create a template
     qm template $img_id
-    # Create a virtual machine out of the template
-    qm clone $img_id $vm_no --name my-${img_type}-${img_id}-vm
-    # Now you can change the Cloud-init # settings either in the admin ui or with the qm command:
-    qm set $vm_no --sshkey ~/.ssh/id_rsa.pub 
-    qm set $vm_no --ipconfig0 ip=$ip_vm/24,gw=$gw_vm
+    
+    # # Create a virtual machine out of the template - UNCOMMENT FROM HERE DOWN TO ALSO CREATE A VM FROM TEMPLATE!
+    # qm clone $img_id $vm_no --name my-${img_type}-${img_id}-vm
+    # # Now you can change the Cloud-init # settings either in the admin ui or with the qm command:
+    # qm set $vm_no --sshkey ~/.ssh/id_rsa.pub 
+    # qm set $vm_no --ipconfig0 ip=$ip_vm/24,gw=$gw_vm
 
-    # Optionally you can start the vm  
-    qm start $vm_no
-    # With this command you have # set a public key for SSH authentication and the static IP 192.168.2.100. 
-    # We didn't # set a user which means Ubuntu is using the default one (ubuntu). That's it! 
-    # Your Cloud-Init image should now boot up fine with the desired # settings.
-    echo "*********************************"
-    echo "The new VM ${vm_no} created with:"
-    echo "ip: ${ip_vm}"
-    echo "Uses default username: ${img_type}"
-    echo "*********************************"
-    echo "Please wait for the vm to start..."
-    sleep 20
-    qm status ${vm_no}
-    echo "Try to login 'ssh ${img_type}@${ip_vm}'"
+    # # Optionally you can start the vm  
+    # qm start $vm_no
+    # # With this command you have # set a public key for SSH authentication and the static IP 192.168.2.100. 
+    # # We didn't # set a user which means Ubuntu is using the default one (ubuntu). That's it! 
+    # # Your Cloud-Init image should now boot up fine with the desired # settings.
+    # echo "*********************************"
+    # echo "The new VM ${vm_no} created with:"
+    # echo "ip: ${ip_vm}"
+    # echo "Uses default username: ${img_type}"
+    # echo "*********************************"
+    # echo "Please wait for the vm to start..."
+    # sleep 20
+    # qm status ${vm_no}
+    # echo "Try to login 'ssh ${img_type}@${ip_vm}'"
     echo
     # set +x
