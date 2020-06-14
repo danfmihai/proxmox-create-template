@@ -1,6 +1,6 @@
 
 # Provisions proxmox template and a new vm from template
-![Proxmox version](https://img.shields.io/badge/Proxmox-6.1-brightgreen.svg)
+![Proxmox version](https://img.shields.io/badge/Proxmox-6.1-brightgreen.svg)  
 Creates a proxmox template using the cloud-init images from Ubuntu,Debian and Centos.  Images are pulled from Ubuntu,Debian and Centos mirrors.  
 Script will assign by default an ubuntu image if no argument is specified at the time the script is ran.  
 Will pull the specified image type and create a template and from there a new vm machine.  
