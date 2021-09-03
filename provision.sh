@@ -133,13 +133,13 @@ vm_no=200
     esac 
 
    # Define your virtual machine which you're like to use as a template
-   qm create $img_id --name "${img_type}-cloudinit-template" --cores 2 --memory 2048 --net0 virtio,bridge=vmbr0
+   qm create $img_id --name "${img_type}-cloudinit-template" --cores 2 --memory 2048 --net0 virtio,bridge=vmbr0 --agent enabled=1
    # Import the disk image in the local Proxmox storage
-   qm importdisk $img_id $img_filename pveimages
+   qm importdisk $img_id $img_filename nvme --format qcow2
    # Configure your virtual machine to use the uploaded image
-   qm set $img_id --scsihw virtio-scsi-pci --scsi0 pveimages:vm-$img_id-disk-0
+   qm set $img_id --scsihw virtio-scsi-pci --scsi0 nvme:$img_id/vm-$img_id-disk-0.qcow2
    # Adding the Cloud-init image as CD-Rom to your virtual machine
-    qm set $img_id --ide2 pveimages:cloudinit
+    qm set $img_id --ide2 nvme:cloudinit
     # Restrict the virtual machine to boot from the Cloud-init image only
     qm set $img_id --boot c --bootdisk scsi0
     # Attach a serial console to the virtual machine 
@@ -169,5 +169,5 @@ vm_no=200
     # sleep 20
     # qm status ${vm_no}
     # echo "Try to login 'ssh ${img_type}@${ip_vm}'"
-    echo
+    # echo
     # set +x
