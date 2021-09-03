@@ -32,9 +32,10 @@ EOF
 }
 
 
-#default image type
+#default image type 
 img_type=
-img_filename=bionic-server-cloudimg-amd64.img
+release=focal # change with what release you want ex. bionic or focal
+img_filename=${release}-server-cloudimg-amd64.img
 img_id=$(shuf -i 9000-9900 -n 1)
 i_vm=$(shuf -i 200-240 -n 1)
 ip_vm=192.168.102.$i_vm
@@ -102,7 +103,7 @@ vm_no=200
         if ls $img_filename* >/dev/null 2>&1; then
             echo "File(s) exits with ${img_type} image."
         else 
-            wget https://cloud-images.ubuntu.com/bionic/current/$img_filename.img
+            wget https://cloud-images.ubuntu.com/${release}/current/$img_filename.img
         fi
         # (Important for Ubuntu!) Rename your image suffix
         find . -name "*.img" -exec sh -c 'mv "$1" "${1%.img}.qcow2"' _ {} \;

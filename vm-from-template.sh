@@ -2,6 +2,8 @@
 clear
 
 tpl_id="$1" # template id provided
+vm_name="$2" # vm name provided at runtime
+vm_hostname="vm-from-tpl-${tpl_id}" #default vm name
 
 # defaults 
 i_vm=$(shuf -i 200-240 -n 1) # random ip
@@ -57,7 +59,7 @@ set_vm_no () {
 create_vm () {
     ## This section creates a vm from above template.
     # # Create a virtual machine out of the template - UNCOMMENT FROM HERE DOWN TO ALSO CREATE A VM FROM TEMPLATE!
-     qm clone $tpl_id $vm_no --name vm-from-tpl-${tpl_id}
+     qm clone $tpl_id $vm_no --name $2
     # # Now you can change the Cloud-init # settings either in the admin ui or with the qm command:
      qm set $vm_no --sshkey ~/.ssh/id_rsa.pub 
      qm set $vm_no --ipconfig0 ip=$ip_vm/24,gw=$gw_vm
@@ -72,6 +74,7 @@ create_vm () {
      echo "ip: ${ip_vm}"
      echo "Template image name: " $tpl_image_name
      echo "Uses default username from image: ${img_name} (ex. ubuntu)"
+     echo "New VM hostname/name: " $2
      echo "*********************************"
      echo "Please wait for the vm to start..."
      sleep 20
@@ -86,26 +89,44 @@ description
 if [ $# -gt 0 ]; then
     
     number=$(cat ./vms.txt) # get all vm no from vms.txt
-
-    for vm_numbers in $number
-    do
-        if [ $tpl_id == $vm_numbers ]; then
-            create_vm $vm_no
-            not_a_match=false
-            break
-        else 
-            not_a_match=true
-        fi
-    done
+    if [ "$vm_name" != '' ]; then 
+        
+        for vm_numbers in $number
+        do
+            if [ $tpl_id == $vm_numbers ]; then
+                create_vm $vm_no $vm_name
+                not_a_match=false
+                break
+            else 
+                not_a_match=true
+            fi
+        done 
         if $not_a_match ; then
             echo "You have not provided a valid TEMPLATE ID! Will exit now. Check your template ID"   
             echo 
         fi
+    else
+        echo "You have not provided the name for the new vm."
+        echo "ex. ./vm-from-template 9000 k8s-master" 
+        echo "The default vm name will be used - ${vm_hostname}"
+        for vm_numbers in $number
+        do
+            if [ $tpl_id == $vm_numbers ]; then
+                create_vm $vm_no $vm_hostname
+                not_a_match=false
+                break
+            else 
+                not_a_match=true
+            fi
+        done
+        if $not_a_match ; then
+            echo "You have not provided a valid TEMPLATE ID! Will exit now. Check your template ID"   
+            echo 
+        fi
+    fi    
 else
-
     echo "You have not provided a valid TEMPLATE ID! Will exit now. "
     exit
-
 fi    
 echo   
 # testing 
