@@ -3,7 +3,7 @@ clear
 
 tpl_id="$1" # template id provided
 
-# defaults
+# defaults 
 i_vm=$(shuf -i 200-240 -n 1) # random ip
 ip_vm=192.168.102.$i_vm # ip of new vm
 gw_vm=192.168.102.1     # gateway
