@@ -34,7 +34,7 @@ EOF
 
 #default image type 
 img_type=
-release=focal # change with what release you want ex. bionic or focal
+release=bionic # change with what release you want ex. bionic or focal
 img_filename=${release}-server-cloudimg-amd64.img
 img_id=$(shuf -i 9000-9900 -n 1)
 i_vm=$(shuf -i 200-240 -n 1)

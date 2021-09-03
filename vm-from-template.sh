@@ -60,9 +60,12 @@ create_vm () {
     ## This section creates a vm from above template.
     # # Create a virtual machine out of the template - UNCOMMENT FROM HERE DOWN TO ALSO CREATE A VM FROM TEMPLATE!
      qm clone $tpl_id $vm_no --name $2
+     # Let's resize the disk with extra 40G
+     qm resize $vm_no scsi0 +40G
     # # Now you can change the Cloud-init # settings either in the admin ui or with the qm command:
      qm set $vm_no --sshkey ~/.ssh/id_rsa.pub 
      qm set $vm_no --ipconfig0 ip=$ip_vm/24,gw=$gw_vm
+     
 
     # # Optionally you can start the vm  
      qm start $vm_no
@@ -77,7 +80,7 @@ create_vm () {
      echo "New VM hostname/name: " $2
      echo "*********************************"
      echo "Please wait for the vm to start..."
-     sleep 20
+     sleep 5
      qm status ${vm_no}
      echo "Try to login 'ssh ${img_name}@${ip_vm}'"
      echo
