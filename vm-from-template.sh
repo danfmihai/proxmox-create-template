@@ -77,7 +77,7 @@ create_vm () {
      echo "New VM hostname/name: " $2
      echo "*********************************"
      echo "Please wait for the vm to start..."
-     sleep 20
+     sleep 10
      qm status ${vm_no}
      echo "Try to login 'ssh ${img_name}@${ip_vm}'"
      echo
